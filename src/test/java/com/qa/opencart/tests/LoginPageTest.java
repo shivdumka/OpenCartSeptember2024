@@ -44,6 +44,4 @@ public class LoginPageTest extends BaseTest
 		Assert.assertEquals(accPage.accountPageTitle(),AppConstants.LOGIN_PAGE_ACCOUNTS_PAGE_TITLE);
 	}
 	
-	
-	
 }

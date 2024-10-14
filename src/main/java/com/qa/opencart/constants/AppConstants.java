@@ -12,7 +12,7 @@ public class AppConstants {
 	public static final int DEFAULT_LONG_TIME_OUT=20;
 	public static final String USER_REGISTERED_SUCCESS_MESG="Your Account Has Been Created!";
 	public static final String SEARCH_MACBOOK_RESULTS_HEADER="Search - macbook";
-	public static final int SEARCH_MACBOOK_RESULTS_COUNT=5;
+	public static final int SEARCH_MACBOOK_RESULTS_COUNT=3;
 	public static final String PRODUCT_PAGE_MACBOOK_PRO="MacBook Pro";
 	
 	
