@@ -38,7 +38,7 @@ public class LoginPage
 	{
 		String title=elementUtil.getTitleContains(AppConstants.LOGIN_PAGE_TITLE,AppConstants.DEFAULT_SHORT_TIME_OUT);
 		//String title=driver.getTitle();
-		System.out.println("Login Page Title is: "+title);
+		System.out.println("Login Page Title is : "+title);
 		return title;
 	}
 	
