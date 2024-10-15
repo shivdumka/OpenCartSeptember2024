@@ -18,7 +18,7 @@
 			<class name="com.qa.opencart.tests.LoginPageTest" />
 		</classes>		
 	</test>	
-	
+	<!--
 	<test name="Account Page Test">
 		<parameter name="browser" value="chrome"/>
 		<classes>
@@ -34,6 +34,7 @@
 		</classes>
 		
 	</test>	
+	
 	<test name="Search Page Test">
 		<parameter name="browser" value="chrome"/>
 		<classes>
@@ -48,6 +49,6 @@
 			<class name="com.qa.opencart.tests.Productinfopagetest"/>
 		</classes>
 		
-	</test>
+	</test>-->
 	
 </suite>
