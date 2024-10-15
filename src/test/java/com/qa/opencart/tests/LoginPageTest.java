@@ -40,8 +40,8 @@ public class LoginPageTest extends BaseTest
 	@Test(priority=Integer.MAX_VALUE)
 	public void loginTest()
 	{
-		//accPage=loginPage.login(prop.getProperty("username"), prop.getProperty("password"));
-		accPage=loginPage.login(prop.getProperty("username"), System.getProperty("password"));
+		accPage=loginPage.login(prop.getProperty("username"), prop.getProperty("password"));
+		//accPage=loginPage.login(prop.getProperty("username"), System.getProperty("password"));
 		Assert.assertEquals(accPage.accountPageTitle(),AppConstants.LOGIN_PAGE_ACCOUNTS_PAGE_TITLE);
 	}
 	
