@@ -39,7 +39,7 @@ pipeline
             steps {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     git 'https://github.com/shivdumka/OpenCartSeptember2024.git'
-                    bat "mvn clean test -Dsurefire.suiteXmlFiles=src/test/resource/testrunners/testng_regression.xml"
+                    bat "mvn clean test -Dsurefire.suiteXmlFiles=src\\test\\resource\\testrunners\\testng_regression.xml"
                     
                 }
             }
