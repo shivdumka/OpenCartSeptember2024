@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.openqa.selenium.OutputType;
@@ -13,6 +15,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import com.qa.opencart.errors.AppError;
 import com.qa.opencart.exceptions.BrowserException;
@@ -29,6 +32,7 @@ public class DriverFactory
 	
 	public static String isHighLight;
 	
+	OptionsManager optionsManager;
 	/**
 	 * This method is used to initialize the driver on the basis of given browser name
 	 * @param Properties prop because our url and browser comes from config.properties to avoid hardcoding
@@ -37,7 +41,7 @@ public class DriverFactory
 	
 	public WebDriver initDriver(Properties prop)
 	{
-		OptionsManager optionsManager=new OptionsManager(prop);
+		optionsManager=new OptionsManager(prop);
 		
 		isHighLight=prop.getProperty("highlight");
 		
@@ -46,20 +50,47 @@ public class DriverFactory
 		switch(browserName.trim().toLowerCase())
 		{
 			case "chrome":
+				
+				if(Boolean.parseBoolean(prop.getProperty("remote")))
+				{
+					initRemoteDriver("chrome");
+				}
 				//driver=new ChromeDriver(optionsManager.getChromeOptions());
-				tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+				
+				else 
+				{
+					tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+					
+				}
 				break;
 				
 			case "firefox":
-				//driver=new FirefoxDriver(optionsManager.getFirefoxOptions());
-				tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
-				break;
-		
-			case "edge":
-				//driver=new EdgeDriver(optionsManager.getEdgeOptions());
-				tlDriver.set(new EdgeDriver(optionsManager.getEdgeOptions()));
-				break;
 				
+				if(Boolean.parseBoolean(prop.getProperty("remote")))
+				{
+					initRemoteDriver("firefox");
+				}
+				
+				//driver=new FirefoxDriver(optionsManager.getFirefoxOptions());
+				
+				else
+				{
+					tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
+				
+				}
+				break;
+			case "edge":
+				if(Boolean.parseBoolean(prop.getProperty("remote")))
+				{
+					initRemoteDriver("edge");
+				}
+				//driver=new EdgeDriver(optionsManager.getEdgeOptions());
+				else 
+				{
+					tlDriver.set(new EdgeDriver(optionsManager.getEdgeOptions()));
+				
+				}
+				break;
 			default:
 				System.out.println(AppError.BROWSER_ERROR_MESSAGE+browserName);
 				throw new BrowserException(AppError.BROWSER_EXCEPTION_MESSAGE);
@@ -80,6 +111,37 @@ public class DriverFactory
 		
 	}
 	
+	private void initRemoteDriver(String browserName) 
+	{
+		System.out.println("Running test cases in remote isolated containers acting as individual machines");
+		try
+		{
+			switch(browserName.toLowerCase().trim())
+			{
+				case "chrome":
+					tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),optionsManager.getChromeOptions()));
+					break;
+		
+				case "firefox":
+					tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),optionsManager.getFirefoxOptions()));
+					break;
+		
+				case "edge":
+					tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")),optionsManager.getEdgeOptions()));
+					break;
+		
+				default:
+					System.out.println("please pass the correct browser :"+browserName);
+					break;
+			}
+		}	
+		catch (MalformedURLException e)
+		{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+		}
+	}
+
 	public static WebDriver getThreadLocalDriver()
 	{
 		return tlDriver.get();

@@ -35,9 +35,11 @@ public class BaseTest
 	
 	protected ProductInfoPage productInfo;
 	
-	@Parameters("browser")
+	@Parameters({"browser" , "browserVersion","testname"})
+	//@Parameters("browser")
 	@BeforeTest
-	public void setUp(@Optional("chrome") String browserName)
+	public void setUp(@Optional("chrome") String browserName,String browserVersion,String testname)
+	//public void setUp(@Optional("chrome") String browserName)
 	{
 		prop=new Properties();
 		df=new DriverFactory();
@@ -47,6 +49,8 @@ public class BaseTest
 		if(browserName!=null)
 		{
 			prop.setProperty("browser", browserName);
+			prop.setProperty("browserVersion", browserVersion);
+			prop.setProperty("testname", testname);
 		}
 		
 		
